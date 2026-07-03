@@ -1,16 +1,24 @@
+import { useState } from "react";
 import AnimeBackground from "./components/AnimeBackground";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 import ContactForm from "./components/ContactForm";
+import { getTheme, DEFAULT_THEME } from "./theme/themes";
 
 function App() {
+  const [themeId, setThemeId] = useState(DEFAULT_THEME);
+  const theme = getTheme(themeId);
+
   return (
-    <main className="app">
-      <AnimeBackground />
+    <main className="app" data-theme={themeId}>
+      <AnimeBackground themeId={themeId} />
+
+      <ThemeSwitcher current={themeId} onChange={setThemeId} />
 
       <section className="container">
         <div className="hero">
           <p className="badge">
-            <span className="badge-kanji">封</span>
-            Sealed Contact Scroll
+            <span className="badge-kanji">{theme.kanji}</span>
+            {theme.label} Breathing — Sealed Contact Scroll
           </p>
 
           <h1>
