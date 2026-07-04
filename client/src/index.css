@@ -373,21 +373,272 @@ button {
 }
 
 /* =========================================================
-   EXTRA SCENE ELEMENTS (per-theme decorations)
+   SCENE VIGNETTE
 ========================================================= */
 
-.scene-rays,
-.scene-lightning,
-.scene-waves,
-.scene-cracks {
+.scene-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 45%, transparent 40%, rgba(4, 1, 8, 0.75) 100%);
+}
+
+/* =========================================================
+   THEME SELECTOR — FLOATING BUTTON + MODAL
+========================================================= */
+
+.theme-fab {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--fab-accent);
+  background: rgba(10, 4, 14, 0.7);
+  color: var(--fab-accent2);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--fab-accent) 55%, transparent);
+  backdrop-filter: blur(8px);
+  transition: var(--transition);
+}
+
+.theme-fab:hover {
+  box-shadow: 0 0 26px var(--fab-accent);
+  transform: translateY(-2px);
+}
+
+.theme-fab-kanji {
+  font-family: var(--font-jp);
+  font-size: 16px;
+  color: var(--fab-accent);
+}
+
+.theme-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(4, 1, 8, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.25s ease;
+}
+
+.theme-modal {
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: #14091a;
+  border: 1px solid #3a1c2e;
+  border-radius: 12px;
+  padding: 26px;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.8);
+}
+
+.theme-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.theme-modal-header h3 {
+  font-family: var(--font-heading);
+  color: var(--text);
+  font-size: 1.3rem;
+}
+
+.theme-modal-close {
+  background: transparent;
+  border: 1px solid #3a1c2e;
+  color: var(--text-dim);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.theme-modal-close:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.theme-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  border-radius: 10px;
+  border: 1px solid #3a1c2e;
+  background: linear-gradient(160deg, var(--card-sky1), var(--card-sky2));
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.theme-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--card-accent);
+  box-shadow: 0 8px 24px -8px var(--card-accent);
+}
+
+.theme-card.active {
+  border-color: var(--card-accent2);
+  box-shadow: 0 0 0 2px var(--card-accent), 0 8px 24px -6px var(--card-accent);
+}
+
+.theme-card-swatch {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 20%, var(--card-accent), transparent 60%);
+  opacity: 0.5;
+}
+
+.theme-card-kanji {
+  position: relative;
+  font-family: var(--font-jp);
+  font-size: 26px;
+  color: var(--card-accent2);
+  text-shadow: 0 0 12px var(--card-accent);
+}
+
+.theme-card-label {
+  position: relative;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   TOUCH / CURSOR EFFECTS
+========================================================= */
+
+.touch-fx-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.touch-spark {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: sparkFade 0.7s ease-out forwards;
+}
+
+@keyframes sparkFade {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+}
+
+.touch-spark-burst {
+  animation: sparkBurst 0.6s ease-out forwards;
+}
+
+@keyframes sparkBurst {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(36px) scale(0.3); }
+}
+
+/* =========================================================
+   THUNDER — flash + bolts
+========================================================= */
+
+.thunder-flash {
+  position: absolute;
+  inset: 0;
+  background: #fffbe0;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  animation: thunderFlash 6s infinite;
+}
+
+@keyframes thunderFlash {
+  0%, 91%, 100% { opacity: 0; }
+  92% { opacity: 0.55; }
+  93% { opacity: 0.1; }
+  94% { opacity: 0.4; }
+  95% { opacity: 0; }
+}
+
+.scene-bolts {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bolt {
+  opacity: 0;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.bolt-0 { animation: boltFlash 6s infinite; }
+.bolt-1 { animation: boltFlash 9s infinite 1.4s; }
+.bolt-2 { animation: boltFlash 7.5s infinite 3s; }
+
+@keyframes boltFlash {
+  0%, 90%, 100% { opacity: 0; }
+  91% { opacity: 1; }
+  92% { opacity: 0.2; }
+  93% { opacity: 0.9; }
+  94% { opacity: 0; }
+}
+
+/* =========================================================
+   WATER — flowing waves
+========================================================= */
+
+.scene-waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%;
+}
+
+.wave-1 { animation: waveMove 9s ease-in-out infinite alternate; }
+.wave-2 { animation: waveMove 12s ease-in-out infinite alternate-reverse; }
+
+@keyframes waveMove {
+  from { transform: translateX(-3%); }
+  to { transform: translateX(3%); }
+}
+
+/* =========================================================
+   SUN — rotating rays
+========================================================= */
+
+.scene-rays {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   opacity: 0.5;
-}
-
-.scene-rays {
   animation: spin 60s linear infinite;
   transform-origin: 75% 15%;
 }
@@ -397,29 +648,9 @@ button {
   to { transform: rotate(360deg); }
 }
 
-.scene-lightning {
-  top: 0;
-  right: 15%;
-  width: 200px;
-  opacity: 0;
-  animation: flash 6s infinite;
-}
-
-@keyframes flash {
-  0%, 92%, 100% { opacity: 0; }
-  93%, 95% { opacity: 0.9; }
-  94% { opacity: 0.3; }
-}
-
-.scene-waves {
-  bottom: 0;
-  animation: waveMove 8s ease-in-out infinite alternate;
-}
-
-@keyframes waveMove {
-  from { transform: translateX(-2%); }
-  to { transform: translateX(2%); }
-}
+/* =========================================================
+   SOUND — radiating rings
+========================================================= */
 
 .scene-rings {
   position: absolute;
@@ -434,71 +665,24 @@ button {
   border: 2px solid;
   border-radius: 50%;
   opacity: 0;
-  animation: ringPulse 3.6s ease-out infinite;
+  animation: ringPulse 4s ease-out infinite;
 }
 
 @keyframes ringPulse {
   0% { opacity: 0.8; transform: scale(0.5); }
-  100% { opacity: 0; transform: scale(8); }
-}
-
-.scene-vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 60% at 50% 45%, transparent 40%, rgba(4, 1, 8, 0.75) 100%);
+  100% { opacity: 0; transform: scale(10); }
 }
 
 /* =========================================================
-   THEME SWITCHER
+   STONE — cracks
 ========================================================= */
 
-.theme-switcher {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 90vw;
-  padding: 8px;
-  background: rgba(10, 4, 14, 0.55);
-  border: 1px solid var(--card-border);
-  border-radius: 999px;
-  backdrop-filter: blur(8px);
-}
-
-.theme-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--text-dim);
-  font-size: 12px;
-  font-weight: 600;
-  transition: var(--transition);
-}
-
-.theme-chip-kanji {
-  font-family: var(--font-jp);
-  color: var(--chip-accent);
-  font-size: 14px;
-}
-
-.theme-chip:hover {
-  border-color: var(--chip-accent);
-  color: var(--chip-accent2);
-}
-
-.theme-chip.active {
-  background: linear-gradient(135deg, var(--chip-accent), var(--chip-accent2));
-  color: #0c0512;
-  box-shadow: 0 0 14px var(--chip-accent);
+.scene-cracks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
 }
 
 /* =========================================================
@@ -887,9 +1071,20 @@ textarea:disabled {
   textarea { min-height: 140px; }
   .submit-btn { padding: 15px; font-size: 15px; }
   .scene-torii { width: 70px; height: 70px; }
-  .theme-switcher { top: 12px; }
-  .theme-chip-label { display: none; }
-  .theme-chip { padding: 8px; }
+
+  .theme-fab { top: 12px; right: 12px; padding: 8px 12px; }
+  .theme-fab-label { display: none; }
+  .theme-modal { padding: 18px; max-height: 80vh; }
+  .theme-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .theme-card { padding: 12px 6px; }
+  .theme-card-kanji { font-size: 20px; }
+  .theme-card-label { font-size: 10px; }
+
+  .touch-spark { width: 10px !important; height: 10px !important; }
+}
+
+@media (max-width: 420px) {
+  .theme-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 480px) {
@@ -916,7 +1111,7 @@ textarea:disabled {
 
 @media print {
   body { background: white; }
-  .scene, .theme-switcher { display: none; }
+  .scene, .theme-fab { display: none; }
   .contact-card { box-shadow: none; }
   .submit-btn { display: none; }
 }

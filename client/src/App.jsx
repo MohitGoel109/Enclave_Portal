@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AnimeBackground from "./components/AnimeBackground";
-import ThemeSwitcher from "./components/ThemeSwitcher";
+import ThemeSelector from "./components/ThemeSelector";
+import TouchEffects from "./components/TouchEffects";
 import ContactForm from "./components/ContactForm";
 import { getTheme, DEFAULT_THEME } from "./theme/themes";
 
@@ -11,8 +12,9 @@ function App() {
   return (
     <main className="app" data-theme={themeId}>
       <AnimeBackground themeId={themeId} />
+      <TouchEffects themeId={themeId} />
 
-      <ThemeSwitcher current={themeId} onChange={setThemeId} />
+      <ThemeSelector current={themeId} onChange={setThemeId} />
 
       <section className="container">
         <div className="hero">

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { getTheme } from "../theme/themes";
 
-const COUNT = { ember: 26, rain: 60, spark: 18, spore: 22, pulse: 6, "haze-drift": 8, dust: 20, petal: 10, heart: 14 };
+const COUNT = { ember: 26, rain: 70, spark: 18, spore: 22, pulse: 0, "haze-drift": 10, dust: 20, petal: 10, heart: 14 };
 
 function AnimeBackground({ themeId }) {
   const theme = getTheme(themeId);
@@ -18,7 +18,16 @@ function AnimeBackground({ themeId }) {
         delay: Math.random() * 10,
         drift: -40 + Math.random() * 80,
       })),
-    [count, particleType]
+    [count]
+  );
+
+  const boltPaths = useMemo(
+    () => [
+      "180,0 215,140 175,150 235,300 195,310 250,540",
+      "60,0 95,120 60,130 120,280 90,290 140,480",
+      "320,0 350,110 315,120 365,260 335,270 380,460",
+    ],
+    []
   );
 
   const [c1, c2] = theme.particleColor;
@@ -35,6 +44,65 @@ function AnimeBackground({ themeId }) {
 
       <div className="scene-stars" />
 
+      {/* THUNDER: full-screen lightning flash + jagged bolts */}
+      {theme.extra === "lightning" && (
+        <>
+          <div className="thunder-flash" />
+          <svg className="scene-bolts" viewBox="0 0 400 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            {boltPaths.map((points, i) => (
+              <polyline
+                key={i}
+                className={`bolt bolt-${i}`}
+                points={points}
+                fill="none"
+                stroke={theme.accent2}
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+            ))}
+          </svg>
+        </>
+      )}
+
+      {/* SOUND: radiating concentric wave rings from center */}
+      {theme.extra === "rings" && (
+        <div className="scene-rings">
+          {[0, 1, 2, 3].map((n) => (
+            <span
+              key={n}
+              className="ring"
+              style={{ borderColor: theme.accent, animationDelay: `${n * 1}s` }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* WATER: layered flowing waves at the base */}
+      {theme.extra === "waves" && (
+        <svg className="scene-waves" viewBox="0 0 1600 240" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path className="wave wave-1" d="M0,120 Q400,60 800,120 T1600,120 V240 H0 Z" fill={theme.accent} opacity="0.22" />
+          <path className="wave wave-2" d="M0,150 Q400,190 800,150 T1600,150 V240 H0 Z" fill={theme.accent2} opacity="0.16" />
+        </svg>
+      )}
+
+      {/* SUN: rotating rays */}
+      {theme.extra === "rays" && (
+        <svg className="scene-rays" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <rect key={i} x="196" y="0" width="8" height="400" fill={theme.accent}
+              opacity="0.14" transform={`rotate(${i * 30} 200 200)`} />
+          ))}
+        </svg>
+      )}
+
+      {/* STONE: cracked ground fissures */}
+      {theme.extra === "cracks" && (
+        <svg className="scene-cracks" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50,400 L90,300 L60,250 L110,180 L90,90" fill="none" stroke={theme.accent} strokeWidth="2" opacity="0.4" />
+          <path d="M300,400 L270,290 L310,240 L270,150" fill="none" stroke={theme.accent} strokeWidth="2" opacity="0.35" />
+        </svg>
+      )}
+
       <svg className="scene-moon" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
@@ -46,42 +114,6 @@ function AnimeBackground({ themeId }) {
         <circle cx="100" cy="100" r="95" fill="url(#moonGlow)" />
         <circle cx="100" cy="100" r="46" fill={theme.accent2} />
       </svg>
-
-      {theme.extra === "rays" && (
-        <svg className="scene-rays" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <rect key={i} x="196" y="0" width="8" height="400" fill={theme.accent}
-              opacity="0.12" transform={`rotate(${i * 30} 200 200)`} />
-          ))}
-        </svg>
-      )}
-
-      {theme.extra === "lightning" && (
-        <svg className="scene-lightning" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-          <polyline points="180,0 220,150 170,160 240,320 190,330 260,600"
-            fill="none" stroke={theme.accent2} strokeWidth="3" />
-        </svg>
-      )}
-
-      {theme.extra === "waves" && (
-        <svg className="scene-waves" viewBox="0 0 1600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,100 Q400,40 800,100 T1600,100 V200 H0 Z" fill={theme.accent} opacity="0.15" />
-        </svg>
-      )}
-
-      {theme.extra === "rings" && (
-        <div className="scene-rings">
-          {[1, 2, 3].map((n) => (
-            <span key={n} className="ring" style={{ borderColor: theme.accent, animationDelay: `${n * 1.2}s` }} />
-          ))}
-        </div>
-      )}
-
-      {theme.extra === "cracks" && (
-        <svg className="scene-cracks" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-          <path d="M50,400 L90,300 L60,250 L110,180 L90,90" fill="none" stroke={theme.accent} strokeWidth="2" opacity="0.35" />
-        </svg>
-      )}
 
       <svg className="scene-mountains-far" viewBox="0 0 1600 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <polygon points="0,320 0,180 200,90 420,200 620,60 860,190 1080,100 1300,210 1600,140 1600,320" fill={theme.sky[1]} opacity="0.7" />
@@ -97,26 +129,28 @@ function AnimeBackground({ themeId }) {
         <div className="scene-fog fog-3 fog-dense" style={{ background: `linear-gradient(90deg, transparent, ${theme.glow}, transparent)` }} />
       )}
 
-      <div className="scene-particles">
-        {particles.map((p) => (
-          <span
-            key={p.id}
-            className={`particle particle-${particleType}`}
-            style={{
-              left: `${p.left}%`,
-              width: particleType === "rain" ? "2px" : `${p.size}px`,
-              height: particleType === "rain" ? "18px" : particleType === "petal" ? `${p.size * 0.7}px` : `${p.size}px`,
-              background: particleType === "petal" || particleType === "dust"
-                ? `linear-gradient(135deg, ${c1}, ${c2})`
-                : `radial-gradient(circle, ${c1} 0%, ${c2} 60%, transparent 80%)`,
-              boxShadow: `0 0 6px 1px ${c2}`,
-              animationDuration: `${p.duration}s`,
-              animationDelay: `${p.delay}s`,
-              "--drift": `${p.drift}px`,
-            }}
-          />
-        ))}
-      </div>
+      {particleType !== "pulse" && (
+        <div className="scene-particles">
+          {particles.map((p) => (
+            <span
+              key={p.id}
+              className={`particle particle-${particleType}`}
+              style={{
+                left: `${p.left}%`,
+                width: particleType === "rain" ? "2px" : `${p.size}px`,
+                height: particleType === "rain" ? "18px" : particleType === "petal" ? `${p.size * 0.7}px` : `${p.size}px`,
+                background: particleType === "petal" || particleType === "dust"
+                  ? `linear-gradient(135deg, ${c1}, ${c2})`
+                  : `radial-gradient(circle, ${c1} 0%, ${c2} 60%, transparent 80%)`,
+                boxShadow: `0 0 6px 1px ${c2}`,
+                animationDuration: `${p.duration}s`,
+                animationDelay: `${p.delay}s`,
+                "--drift": `${p.drift}px`,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="scene-vignette" />
     </div>
