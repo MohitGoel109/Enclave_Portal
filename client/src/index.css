@@ -62,7 +62,6 @@ button {
   --green: #4caf7d;
   --red: #e63946;
 
-  /* Overridden per data-theme below — these are the fallback (Sound) values */
   --accent: #e64fd9;
   --accent2: #ff9df0;
   --glow: rgba(230, 79, 217, 0.55);
@@ -532,7 +531,7 @@ button {
 }
 
 /* =========================================================
-   TOUCH / CURSOR EFFECTS
+   TOUCH / CURSOR EFFECTS — shape differs per breathing style
 ========================================================= */
 
 .touch-fx-layer {
@@ -543,25 +542,124 @@ button {
   overflow: hidden;
 }
 
-.touch-spark {
+.touch-fx {
   position: absolute;
-  border-radius: 50%;
   transform: translate(-50%, -50%);
-  animation: sparkFade 0.7s ease-out forwards;
 }
 
-@keyframes sparkFade {
+/* SUN — rising flame droplet */
+.touch-flame {
+  border-radius: 50% 50% 50% 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  animation: flameRise 0.75s ease-out forwards;
+  filter: blur(0.3px);
+}
+.touch-flame-burst { animation: flameBurst 0.6s ease-out forwards; }
+@keyframes flameRise {
+  0% { opacity: 0.95; transform: translate(-50%, -50%) rotate(45deg) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -80%) rotate(45deg) scale(0.3); }
+}
+@keyframes flameBurst {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(30px) translateY(-20px) scale(0.2); }
+}
+
+/* WATER / SOUND — expanding ring ripple */
+.touch-ripple-ring {
+  width: 14px;
+  height: 14px;
+  border: 2px solid;
+  border-radius: 50%;
+  background: transparent !important;
+  animation: rippleOut 0.9s ease-out forwards;
+}
+.touch-ripple-burst { animation: rippleBurstOut 0.9s ease-out forwards; }
+@keyframes rippleOut {
+  0% { opacity: 0.85; transform: translate(-50%, -50%) scale(0.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(3.2); }
+}
+@keyframes rippleBurstOut {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(5); }
+}
+
+/* THUNDER — quick angular zap flash */
+.touch-zap {
+  width: 5px;
+  height: 16px;
+  clip-path: polygon(50% 0%, 100% 35%, 60% 40%, 100% 100%, 0% 55%, 40% 50%);
+  animation: zapFlash 0.4s ease-out forwards;
+}
+@keyframes zapFlash {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rotate)) scale(1.4); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--rotate)) scale(0.6); }
+}
+
+/* INSECT — drifting glow orb (firefly scatter) */
+.touch-orb {
+  border-radius: 50%;
+  animation: orbDrift 0.85s ease-out forwards;
+}
+.touch-orb-burst { animation: orbScatter 0.8s ease-out forwards; }
+@keyframes orbDrift {
   0% { opacity: 0.9; transform: translate(-50%, -50%) scale(1); }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
 }
-
-.touch-spark-burst {
-  animation: sparkBurst 0.6s ease-out forwards;
+@keyframes orbScatter {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(34px) scale(0.3); }
 }
 
-@keyframes sparkBurst {
+/* MIST — slow soft dissolving puff */
+.touch-puff {
+  border-radius: 50%;
+  animation: puffDissolve 1.1s ease-out forwards;
+  filter: blur(2px);
+}
+@keyframes puffDissolve {
+  0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.5); filter: blur(1px); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.2); filter: blur(6px); }
+}
+
+/* STONE — tumbling rock chip fragment */
+.touch-chip {
+  border-radius: 2px;
+  animation: chipFall 0.7s ease-in forwards;
+}
+.touch-chip-burst { animation: chipBurst 0.7s ease-out forwards; }
+@keyframes chipFall {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) rotate(var(--rotate)) translateY(0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--rotate) + 180deg)) translateY(24px) scale(0.5); }
+}
+@keyframes chipBurst {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rotate)) translateX(0) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--rotate) + 220deg)) translateX(28px) translateY(26px) scale(0.4); }
+}
+
+/* FLOWER — drifting petal */
+.touch-petal-fx {
+  border-radius: 0 60% 0 60%;
+  animation: petalDrift 1s ease-out forwards;
+}
+.touch-petal-burst { animation: petalBurst 0.9s ease-out forwards; }
+@keyframes petalDrift {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -30%) rotate(140deg) scale(0.4); }
+}
+@keyframes petalBurst {
   0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(36px) scale(0.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(32px) rotate(180deg) scale(0.3); }
+}
+
+/* LOVE — small heart pop */
+.touch-heart-fx {
+  clip-path: polygon(50% 15%, 61% 0%, 78% 0%, 100% 22%, 100% 40%, 50% 100%, 0% 40%, 0% 22%, 22% 0%, 39% 0%);
+  animation: heartPop 0.8s ease-out forwards;
+}
+@keyframes heartPop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+  25% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+  100% { opacity: 0; transform: translate(-50%, -90%) scale(0.7); }
 }
 
 /* =========================================================
@@ -649,7 +747,7 @@ button {
 }
 
 /* =========================================================
-   SOUND — radiating rings
+   SOUND — radiating rings + equalizer bars
 ========================================================= */
 
 .scene-rings {
@@ -673,8 +771,38 @@ button {
   100% { opacity: 0; transform: scale(10); }
 }
 
+.scene-equalizer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 18%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 8%;
+  opacity: 0.55;
+}
+
+.eq-bar {
+  flex: 1;
+  max-width: 14px;
+  height: var(--eq-base);
+  border-radius: 3px 3px 0 0;
+  animation-name: eqPulse;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+@keyframes eqPulse {
+  from { height: var(--eq-base); }
+  to { height: var(--eq-peak); }
+}
+
 /* =========================================================
-   STONE — cracks
+   STONE — cracks + periodic tremor shake
 ========================================================= */
 
 .scene-cracks {
@@ -683,6 +811,150 @@ button {
   width: 100%;
   height: 100%;
   opacity: 0.5;
+}
+
+.scene-tremor {
+  animation: tremorShake 5s ease-in-out infinite;
+}
+
+@keyframes tremorShake {
+  0%, 88%, 100% { transform: translate(0, 0); }
+  89% { transform: translate(-2px, 1px); }
+  90% { transform: translate(3px, -1px); }
+  91% { transform: translate(-2px, 2px); }
+  92% { transform: translate(1px, -2px); }
+  93% { transform: translate(0, 0); }
+}
+
+/* =========================================================
+   INSECT — firefly swarm wandering erratically
+========================================================= */
+
+.scene-fireflies {
+  position: absolute;
+  inset: 0;
+}
+
+.firefly {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  animation-name: wander;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wander {
+  0% { transform: translate(0, 0); opacity: 0.3; }
+  25% { transform: translate(var(--wx1), var(--wy1)); opacity: 0.9; }
+  50% { transform: translate(var(--wx2), var(--wy2)); opacity: 0.5; }
+  75% { transform: translate(var(--wx3), var(--wy3)); opacity: 0.9; }
+  100% { transform: translate(0, 0); opacity: 0.3; }
+}
+
+/* =========================================================
+   MIST — sweeping god rays through the haze
+========================================================= */
+
+.scene-godrays {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.5;
+}
+
+.godray {
+  position: absolute;
+  top: -20%;
+  width: 120px;
+  height: 140%;
+  transform-origin: top center;
+  filter: blur(8px);
+}
+
+.godray-1 { left: 10%; transform: rotate(12deg); animation: godraySweep 14s ease-in-out infinite; }
+.godray-2 { left: 45%; transform: rotate(-8deg); animation: godraySweep 18s ease-in-out infinite reverse; }
+.godray-3 { left: 75%; transform: rotate(16deg); animation: godraySweep 22s ease-in-out infinite; }
+
+@keyframes godraySweep {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.55; }
+}
+
+/* =========================================================
+   FLOWER — pulsing bloom glow + drifting pollen
+========================================================= */
+
+.scene-bloom {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  animation: bloomPulse 7s ease-in-out infinite;
+}
+
+@keyframes bloomPulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 0.85; }
+}
+
+.scene-pollen {
+  position: absolute;
+  inset: 0;
+}
+
+.pollen-mote {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  opacity: 0;
+  animation-name: pollenFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pollenFloat {
+  0% { transform: translate(0, 0); opacity: 0; }
+  20% { opacity: 0.7; }
+  50% { transform: translate(20px, -30px); }
+  80% { opacity: 0.5; }
+  100% { transform: translate(-15px, -60px); opacity: 0; }
+}
+
+/* =========================================================
+   LOVE — heartbeat pulse glow (double-thump rhythm)
+========================================================= */
+
+.scene-heartbeat {
+  position: absolute;
+  top: 20%;
+  right: 15%;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  animation: heartbeatGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes heartbeatGlow {
+  0%, 60%, 100% { transform: scale(0.9); opacity: 0.4; }
+  15% { transform: scale(1.15); opacity: 0.8; }
+  30% { transform: scale(0.95); opacity: 0.5; }
+  45% { transform: scale(1.2); opacity: 0.85; }
+}
+
+.scene-moon-heartbeat {
+  animation: moonHeartbeat 2.4s ease-in-out infinite !important;
+}
+
+@keyframes moonHeartbeat {
+  0%, 60%, 100% { filter: drop-shadow(0 0 18px var(--glow)); }
+  15% { filter: drop-shadow(0 0 34px var(--glow)); }
+  30% { filter: drop-shadow(0 0 20px var(--glow)); }
+  45% { filter: drop-shadow(0 0 38px var(--glow)); }
 }
 
 /* =========================================================
@@ -1079,8 +1351,6 @@ textarea:disabled {
   .theme-card { padding: 12px 6px; }
   .theme-card-kanji { font-size: 20px; }
   .theme-card-label { font-size: 10px; }
-
-  .touch-spark { width: 10px !important; height: 10px !important; }
 }
 
 @media (max-width: 420px) {
