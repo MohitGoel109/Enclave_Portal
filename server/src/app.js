@@ -12,6 +12,11 @@ import errorHandler from "./middlewares/error.middleware.js";
 
 const app = express();
 
+// Render (and most hosting platforms) sit behind a reverse proxy —
+// trust the first proxy hop so express-rate-limit can correctly
+// identify client IPs via X-Forwarded-For.
+app.set("trust proxy", 1);
+
 /*
 |--------------------------------------------------------------------------
 | Security Middleware
