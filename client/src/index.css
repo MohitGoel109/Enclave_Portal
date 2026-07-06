@@ -561,14 +561,14 @@ button {
 }
 @keyframes flameBurst {
   0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(30px) translateY(-20px) scale(0.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(46px) translateY(-32px) scale(0.15); }
 }
 
 /* WATER / SOUND — expanding ring ripple */
 .touch-ripple-ring {
-  width: 14px;
-  height: 14px;
-  border: 2px solid;
+  width: 26px;
+  height: 26px;
+  border: 3px solid;
   border-radius: 50%;
   background: transparent !important;
   animation: rippleOut 0.9s ease-out forwards;
@@ -576,23 +576,23 @@ button {
 .touch-ripple-burst { animation: rippleBurstOut 0.9s ease-out forwards; }
 @keyframes rippleOut {
   0% { opacity: 0.85; transform: translate(-50%, -50%) scale(0.3); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(3.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(4.2); }
 }
 @keyframes rippleBurstOut {
   0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.3); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(5); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(6.5); }
 }
 
 /* THUNDER — quick angular zap flash */
 .touch-zap {
-  width: 5px;
-  height: 16px;
+  width: 10px;
+  height: 30px;
   clip-path: polygon(50% 0%, 100% 35%, 60% 40%, 100% 100%, 0% 55%, 40% 50%);
   animation: zapFlash 0.4s ease-out forwards;
 }
 @keyframes zapFlash {
-  0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rotate)) scale(1.4); }
-  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--rotate)) scale(0.6); }
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rotate)) scale(2.2); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--rotate)) scale(1); }
 }
 
 /* INSECT — drifting glow orb (firefly scatter) */
@@ -607,7 +607,7 @@ button {
 }
 @keyframes orbScatter {
   0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(34px) scale(0.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(52px) scale(0.25); }
 }
 
 /* MIST — slow soft dissolving puff */
@@ -629,11 +629,11 @@ button {
 .touch-chip-burst { animation: chipBurst 0.7s ease-out forwards; }
 @keyframes chipFall {
   0% { opacity: 0.9; transform: translate(-50%, -50%) rotate(var(--rotate)) translateY(0) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--rotate) + 180deg)) translateY(24px) scale(0.5); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--rotate) + 180deg)) translateY(38px) scale(0.4); }
 }
 @keyframes chipBurst {
   0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--rotate)) translateX(0) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--rotate) + 220deg)) translateX(28px) translateY(26px) scale(0.4); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--rotate) + 220deg)) translateX(44px) translateY(40px) scale(0.3); }
 }
 
 /* FLOWER — drifting petal */
@@ -648,7 +648,7 @@ button {
 }
 @keyframes petalBurst {
   0% { opacity: 1; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(32px) rotate(180deg) scale(0.3); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--angle)) translateX(48px) rotate(180deg) scale(0.25); }
 }
 
 /* LOVE — small heart pop */
