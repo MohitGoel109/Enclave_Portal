@@ -3,7 +3,9 @@ import { getTheme } from "../theme/themes";
 
 let idCounter = 0;
 
-// Spawn rate / lifespan / burst size tuned per shape so each style feels distinct
+// How many trail particles to spawn per burst, and the min ms between
+// trail spawns while the pointer is moving — tuned per shape so each
+// style feels distinct (e.g. fire trail is denser, ripples are sparser).
 const SHAPE_CONFIG = {
   flame: { spawnMs: 40, life: 750, burstCount: 8 },
   ripple: { spawnMs: 220, life: 900, burstCount: 3 },
@@ -33,7 +35,7 @@ function TouchEffects({ themeId }) {
           id,
           x,
           y,
-          size: 6 + Math.random() * 10,
+          size: 14 + Math.random() * 16,
           angle: Math.random() * 360,
           rotate: Math.random() * 360,
           ...extra,
@@ -107,7 +109,11 @@ function TouchEffects({ themeId }) {
             <span
               key={s.id}
               className="touch-fx touch-zap"
-              style={{ ...baseStyle, background: c2, boxShadow: `0 0 10px 3px ${c1}` }}
+              style={{
+                ...baseStyle,
+                background: c2,
+                boxShadow: `0 0 10px 3px ${c1}`,
+              }}
             />
           );
         }
@@ -119,8 +125,8 @@ function TouchEffects({ themeId }) {
               className="touch-fx touch-puff"
               style={{
                 ...baseStyle,
-                width: `${s.size * 2.2}px`,
-                height: `${s.size * 2.2}px`,
+                width: `${s.size * 3.4}px`,
+                height: `${s.size * 3.4}px`,
                 background: `radial-gradient(circle, ${c2}55 0%, ${c1}33 60%, transparent 80%)`,
               }}
             />
@@ -134,8 +140,8 @@ function TouchEffects({ themeId }) {
               className={`touch-fx touch-petal-fx ${s.burst ? "touch-petal-burst" : ""}`}
               style={{
                 ...baseStyle,
-                width: `${s.size}px`,
-                height: `${s.size * 0.7}px`,
+                width: `${s.size * 1.6}px`,
+                height: `${s.size * 1.1}px`,
                 background: `linear-gradient(135deg, ${c2}, ${c1})`,
               }}
             />
@@ -149,8 +155,8 @@ function TouchEffects({ themeId }) {
               className="touch-fx touch-heart-fx"
               style={{
                 ...baseStyle,
-                width: `${s.size}px`,
-                height: `${s.size}px`,
+                width: `${s.size * 1.5}px`,
+                height: `${s.size * 1.5}px`,
                 background: `linear-gradient(135deg, ${c2}, ${c1})`,
               }}
             />
@@ -164,8 +170,8 @@ function TouchEffects({ themeId }) {
               className={`touch-fx touch-chip ${s.burst ? "touch-chip-burst" : ""}`}
               style={{
                 ...baseStyle,
-                width: `${s.size * 0.8}px`,
-                height: `${s.size * 0.8}px`,
+                width: `${s.size * 1.3}px`,
+                height: `${s.size * 1.3}px`,
                 background: `linear-gradient(135deg, ${c2}, ${c1})`,
               }}
             />
@@ -179,8 +185,8 @@ function TouchEffects({ themeId }) {
               className={`touch-fx touch-flame ${s.burst ? "touch-flame-burst" : ""}`}
               style={{
                 ...baseStyle,
-                width: `${s.size}px`,
-                height: `${s.size * 1.4}px`,
+                width: `${s.size * 1.4}px`,
+                height: `${s.size * 2}px`,
                 background: `linear-gradient(0deg, ${c1}, ${c2})`,
               }}
             />
@@ -194,8 +200,8 @@ function TouchEffects({ themeId }) {
             className={`touch-fx touch-orb ${s.burst ? "touch-orb-burst" : ""}`}
             style={{
               ...baseStyle,
-              width: `${s.size}px`,
-              height: `${s.size}px`,
+              width: `${s.size * 1.7}px`,
+              height: `${s.size * 1.7}px`,
               background: `radial-gradient(circle, ${c2} 0%, ${c1} 60%, transparent 80%)`,
               boxShadow: `0 0 10px 2px ${c2}`,
             }}
