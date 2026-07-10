@@ -1385,3 +1385,109 @@ textarea:disabled {
   .contact-card { box-shadow: none; }
   .submit-btn { display: none; }
 }
+/* =========================================================
+   SIGIL UNLOCK BUTTONS
+========================================================= */
+
+.sigil-btn {
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sigil-btn:hover {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+.sigil-active {
+  opacity: 1;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--glow);
+}
+
+.sigil-active::before {
+  border-color: var(--accent);
+}
+
+.dashboard-reveal-btn {
+  width: fit-content;
+  margin-top: 10px;
+  animation: fadeIn 0.5s ease;
+}
+
+/* =========================================================
+   DASHBOARD PAGE
+========================================================= */
+
+.dashboard-container {
+  grid-template-columns: 1fr;
+  max-width: 1000px;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.dashboard-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-back-btn {
+  width: fit-content;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  padding: 24px;
+}
+
+.dashboard-card-subject {
+  font-family: var(--font-heading);
+  color: var(--accent2);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.dashboard-card-meta {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.dashboard-card-message {
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 14px;
+  white-space: pre-wrap;
+}
+
+.dashboard-card-date {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .dashboard-title { font-size: 1.5rem; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+}

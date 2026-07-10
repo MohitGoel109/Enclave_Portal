@@ -40,4 +40,34 @@ export const submitContact = async (formData) => {
   }
 };
 
+/*
+|--------------------------------------------------------------------------
+| Get All Contact Messages (Dashboard)
+|--------------------------------------------------------------------------
+*/
+
+export const getAllContacts = async () => {
+  try {
+    const response = await api.get("/contact");
+
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      throw error.response.data;
+    }
+
+    if (error.request) {
+      throw {
+        success: false,
+        message: "Unable to reach the server. Please try again later.",
+      };
+    }
+
+    throw {
+      success: false,
+      message: "Something went wrong.",
+    };
+  }
+};
+
 export default api;
